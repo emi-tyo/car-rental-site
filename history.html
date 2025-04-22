@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Reservation History</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+  <!-- ✅ Header with Logo -->
+  <header>
+    <a href="index.html">
+      <img src="images/city-style-logo.png" alt="CarRental Logo" class="logo" />
+    </a>
+  </header>
+
+  <main style="padding: 20px;">
+    <h1>Reservation History</h1>
+
+    <table border="1">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Car</th>
+          <th>Days</th>
+          <th>Total Price</th>
+        </tr>
+      </thead>
+      <tbody id="orderList"></tbody>
+    </table>
+
+    <a href="index.html" style="display:block; margin-top:20px;">Back to Home</a>
+  </main>
+
+  <script>
+    $(document).ready(function () {
+      $.get("http://localhost:3000/orders", function (orders) {
+        if (!orders || !orders.orders || orders.orders.length === 0) {
+          $("#orderList").append('<tr><td colspan="4">No reservations found.</td></tr>');
+        } else {
+          const confirmed = orders.orders.filter(o => o.status === "confirmed");
+          if (confirmed.length === 0) {
+            $("#orderList").append('<tr><td colspan="4">No confirmed reservations.</td></tr>');
+          } else {
+            confirmed.forEach(order => {
+              $("#orderList").append(`
+                <tr>
+                  <td>${order.name}</td>
+                  <td>${order.car.brand} ${order.car.carModel}</td>
+                  <td>${order.rentalDays}</td>
+                  <td>$${order.total}</td>
+                </tr>
+              `);
+            });
+          }
+        }
+      }).fail(() => {
+        $("#orderList").append('<tr><td colspan="4">Error loading reservation history.</td></tr>');
+      });
+    });
+  </script>
+</body>
+</html>

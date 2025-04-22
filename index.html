@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Car Rental Service</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+  <header>
+    <a href="index.html">
+      <img src="images/city-style-logo.png" alt="CarRental Logo" class="logo" />
+    </a>
+    <div class="searchControls">
+      <input type="text" id="searchBox" placeholder="Search cars..." autocomplete="off" />
+      <div id="suggestions"></div>
+      <select id="typeFilter">
+        <option value="">All Types</option>
+        <option value="Sedan">Sedan</option>
+        <option value="SUV">SUV</option>
+        <option value="Coupe">Coupe</option>
+      </select>
+      <select id="brandFilter">
+        <option value="">All Brands</option>
+        <option value="Toyota">Toyota</option>
+        <option value="Honda">Honda</option>
+        <option value="Ford">Ford</option>
+      </select>
+      <button id="reservationIcon">Reservation</button>
+    </div>
+  </header>
+
+  <section class="hero">
+    <div class="overlay">
+      <h1 class="heroTitle">CarRental</h1>
+      <p>Find the car that fits your journey.</p>
+    </div>
+  </section>
+
+  <main>
+    <div id="carGrid"></div>
+  </main>
+
+  <script>
+    let cars = [];
+
+    function renderCars(data) {
+      const grid = $('#carGrid');
+      grid.empty();
+      data.forEach(car => {
+        const carCard = $(
+          `<div class="carCard">
+            <img src="${car.image}" alt="${car.carModel}" />
+            <h3>${car.brand} ${car.carModel}</h3>
+            <p>${car.description}</p>
+            <p>$${car.pricePerDay}/day</p>
+            <button class="rentBtn" data-vin="${car.vin}" 
+              ${!car.available ? 'disabled title="Out of Stock"' : ''}>
+              ${car.available ? 'Rent' : 'Out of Stock'}
+            </button>
+
+          </div>`
+        );
+        grid.append(carCard);
+      });
+    }
+
+    function filterAndSearch() {
+      const keyword = $('#searchBox').val().toLowerCase();
+      const type = $('#typeFilter').val();
+      const brand = $('#brandFilter').val();
+
+      const filtered = cars.filter(car => {
+        const keywordMatch = car.carType.toLowerCase().includes(keyword) ||
+                             car.brand.toLowerCase().includes(keyword) ||
+                             car.carModel.toLowerCase().includes(keyword) ||
+                             car.description.toLowerCase().includes(keyword);
+        const typeMatch = type === '' || car.carType === type;
+        const brandMatch = brand === '' || car.brand === brand;
+        return keywordMatch && typeMatch && brandMatch;
+      });
+
+      renderCars(filtered);
+    }
+
+    function setupSearchSuggestions() {
+      $('#searchBox').on('input', function() {
+        const inputVal = $(this).val().toLowerCase();
+        const matches = [];
+        cars.forEach(car => {
+          const words = [car.carType, car.brand, car.carModel, car.description];
+          words.forEach(word => {
+            if (word.toLowerCase().includes(inputVal) && !matches.includes(word)) {
+              matches.push(word);
+            }
+          });
+        });
+
+        const suggestionBox = $('#suggestions');
+        suggestionBox.empty();
+        matches.slice(0, 5).forEach(match => {
+          suggestionBox.append(`<div class="suggestion">${match}</div>`);
+        });
+      });
+
+      $('#suggestions').on('click', '.suggestion', function() {
+        const val = $(this).text();
+        $('#searchBox').val(val);
+        $('#suggestions').empty();
+        filterAndSearch();
+      });
+    }
+
+    $(document).ready(function() {
+      $('#typeFilter, #brandFilter').on('change', filterAndSearch);
+      $('#searchBox').on('input', filterAndSearch);
+
+      $.getJSON('data/cars.json', function(data) {
+        cars = data.cars;
+        renderCars(cars);
+      });
+
+      setupSearchSuggestions();
+
+      $('#carGrid').on('click', '.rentBtn', function() {
+        const vin = $(this).data('vin');
+        sessionStorage.setItem('selectedCarVin', vin);
+        window.location.href = 'reservation.html';
+      });
+
+      $('#reservationIcon').on('click', function() {
+        window.location.href = 'reservation.html';
+      });
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Reservation Confirmed</title>
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <!-- ✅ Logo -->
+  <header>
+    <a href="index.html">
+      <img src="images/city-style-logo.png" alt="CarRental Logo" class="logo" />
+    </a>
+  </header>
+
+  <h1>Your reservation has been confirmed!</h1>
+  <div id="confirmationDetails">Loading...</div>
+
+  <a href="index.html">Back to Home</a> |
+  <a href="history.html">View Reservation History</a>
+
+  <script>
+    const urlParams = new URLSearchParams(window.location.search);
+    const id = urlParams.get("id");
+
+    if (id) {
+      fetch("http://localhost:3000/confirm-order", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ id })
+      })
+      .then(res => res.json())
+      .then(result => {
+        if (result.success) {
+          const data = result.order;
+          document.getElementById("confirmationDetails").innerHTML = `
+            <p>Name: ${data.name}</p>
+            <p>Car: ${data.car.brand} ${data.car.carModel}</p>
+            <p>Rental Days: ${data.rentalDays} days</p>
+            <p>Total Price: $${data.total}</p>
+            <p>Status: ${data.status}</p>
+          `;
+        } else {
+          document.getElementById("confirmationDetails").textContent = "Reservation not found.";
+        }
+      })
+      .catch(err => {
+        console.error(err);
+        document.getElementById("confirmationDetails").textContent = "An error occurred while confirming.";
+      });
+    } else {
+      document.getElementById("confirmationDetails").textContent = "Invalid reservation link.";
+    }
+  </script>
+</body>
+</html>

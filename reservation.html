@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Car Reservation</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+  <header>
+    <a href="index.html">
+      <img src="images/city-style-logo.png" alt="CarRental Logo" class="logo" />
+    </a>
+  </header>
+
+  <main>
+    <section id="carInfoSection">
+      <h2>Selected Car Details</h2>
+      <div id="carInfo"></div>
+    </section>
+
+    <section id="reservationFormSection">
+      <h2>Car Rental Reservation Form</h2>
+      <form id="reservationForm">
+        <input type="text" id="name" placeholder="Your Name" required />
+        <input type="tel" id="phone" placeholder="Phone Number" required />
+        <input type="email" id="email" placeholder="Email Address" required />
+        <input type="text" id="license" placeholder="Driver's License Number" required />
+        <label>Rental Start Date: <input type="date" id="startDate" required /></label>
+        <label>Rental Duration (days): <input type="number" id="rentalDays" min="1" required /></label>
+        <p>Total Price: <span id="totalPrice">$0</span></p>
+
+        <button type="submit" id="submitBtn" disabled>Confirm Reservation</button>
+        <button type="button" id="cancelBtn">Cancel</button>
+      </form>
+      <div id="confirmationLink"></div>
+
+      <div id="popup" class="modal" style="display: none;">
+        <div class="modal-content">
+          <p>Your reservation has been saved as <strong>pending</strong>.<br>
+            Please click the link below to confirm your booking:</p>
+          <a id="popupLink" href="#" target="_blank">Confirm Your Reservation</a>
+          <br><br>
+          <button onclick="document.getElementById('popup').style.display='none'">OK</button>
+        </div>
+      </div>
+      
+
+    </section>
+  </main>
+
+  <script src="js/reservation.js"></script>
+</body>
+</html>
