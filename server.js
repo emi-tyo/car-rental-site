@@ -42,6 +42,7 @@ app.post('/confirm-order', (req, res) => {
 
   if (order) {
     order.status = 'confirmed';
+    order.car.available = false;
     fs.writeFileSync('orders.json', JSON.stringify(orders, null, 2));
     res.json({ success: true, order });
   } else {
