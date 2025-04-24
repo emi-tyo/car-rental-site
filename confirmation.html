@@ -2,55 +2,62 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Reservation Confirmed</title>
+  <title>Reservation Confirmation</title>
   <link rel="stylesheet" href="css/style.css" />
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 <body>
-  <!-- ✅ Logo -->
   <header>
     <a href="index.html">
       <img src="images/city-style-logo.png" alt="CarRental Logo" class="logo" />
     </a>
   </header>
 
-  <h1>Your reservation has been confirmed!</h1>
-  <div id="confirmationDetails">Loading...</div>
-
-  <a href="index.html">Back to Home</a> |
-  <a href="history.html">View Reservation History</a>
+  <main>
+    <section id="confirmationDetails" style="margin-left: 40px;">
+      <!-- Reservation details will be inserted here -->
+      <p>Loading confirmation...</p>
+    </section>
+  </main>
 
   <script>
-    const urlParams = new URLSearchParams(window.location.search);
-    const id = urlParams.get("id");
+    $(document).ready(function () {
+      const urlParams = new URLSearchParams(window.location.search);
+      const id = urlParams.get('id');
 
-    if (id) {
-      fetch("http://localhost:3000/confirm-order", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ id })
+      if (!id) {
+        $('#confirmationDetails').html('<h2 style="color:red">Invalid confirmation link.</h2>');
+        return;
+      }
+
+      fetch('http://localhost:3000/confirm-order', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ id }),
       })
       .then(res => res.json())
-      .then(result => {
-        if (result.success) {
-          const data = result.order;
-          document.getElementById("confirmationDetails").innerHTML = `
-            <p>Name: ${data.name}</p>
-            <p>Car: ${data.car.brand} ${data.car.carModel}</p>
-            <p>Rental Days: ${data.rentalDays} days</p>
-            <p>Total Price: $${data.total}</p>
-            <p>Status: ${data.status}</p>
-          `;
+      .then(data => {
+        if (data.success && data.order) {
+          const order = data.order; // ✅ Corrected name
+          $('#confirmationDetails').html(`
+            <h2 style="color: green;">Your reservation has been confirmed!</h2>
+            <p><strong>Name:</strong> ${order.name}</p>
+            <p><strong>Car:</strong> ${order.car.brand} ${order.car.carModel}</p>
+            <p><strong>Rental Days:</strong> ${order.rentalDays} days</p>
+            <p><strong>Total Price:</strong> $${order.total ?? 0}</p>
+            <p><strong>Status:</strong> ${order.status}</p>
+            <br>
+            <a href="index.html">← Back to Home</a> | <a href="history.html">View Reservation History →</a>
+          `);
         } else {
-          document.getElementById("confirmationDetails").textContent = "Reservation not found.";
+          $('#confirmationDetails').html('<h2 style="color:red">Reservation not found.</h2>');
         }
       })
       .catch(err => {
+        $('#confirmationDetails').html('<h2 style="color:red">Error loading confirmation.</h2>');
         console.error(err);
-        document.getElementById("confirmationDetails").textContent = "An error occurred while confirming.";
       });
-    } else {
-      document.getElementById("confirmationDetails").textContent = "Invalid reservation link.";
-    }
+    });
   </script>
 </body>
 </html>

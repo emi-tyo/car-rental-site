@@ -63,7 +63,7 @@ $(document).ready(function () {
       startDate: $("#startDate").val(),
       rentalDays: parseInt($("#rentalDays").val()),
       car: selectedCar,
-      total: selectedCar.pricePerDay * parseInt($("#rentalDays").val()),
+      totalPrice: selectedCar.pricePerDay * parseInt($("#rentalDays").val()),
       status: "pending",
       id: Date.now().toString()  // ← 一意な ID を文字列で生成
     };

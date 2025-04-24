@@ -5,6 +5,81 @@
   <title>Car Reservation</title>
   <link rel="stylesheet" href="css/style.css" />
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f5f5f5;
+      margin: 0;
+    }
+
+    .logo {
+      height: 60px;
+      margin: 20px;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 20px;
+      background-color: #ffffff;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
+      border-radius: 8px;
+    }
+
+    section {
+      margin-bottom: 30px;
+    }
+
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    input, label, button {
+      font-size: 1rem;
+    }
+
+    input {
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+
+    button {
+      padding: 10px;
+      border: none;
+      border-radius: 4px;
+      background-color: #007BFF;
+      color: white;
+      cursor: pointer;
+    }
+
+    button:disabled {
+      background-color: #aaa;
+      cursor: not-allowed;
+    }
+
+    #popup {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background-color: rgba(0,0,0,0.5);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .modal-content {
+      background-color: #fff;
+      padding: 20px 30px;
+      border-radius: 8px;
+      text-align: center;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    }
+  </style>
 </head>
 <body>
   <header>
@@ -14,39 +89,39 @@
   </header>
 
   <main>
-    <section id="carInfoSection">
-      <h2>Selected Car Details</h2>
-      <div id="carInfo"></div>
-    </section>
+    <div class="container">
+      <section id="carInfoSection">
+        <h2>Selected Car Details</h2>
+        <div id="carInfo"></div>
+      </section>
 
-    <section id="reservationFormSection">
-      <h2>Car Rental Reservation Form</h2>
-      <form id="reservationForm">
-        <input type="text" id="name" placeholder="Your Name" required />
-        <input type="tel" id="phone" placeholder="Phone Number" required />
-        <input type="email" id="email" placeholder="Email Address" required />
-        <input type="text" id="license" placeholder="Driver's License Number" required />
-        <label>Rental Start Date: <input type="date" id="startDate" required /></label>
-        <label>Rental Duration (days): <input type="number" id="rentalDays" min="1" required /></label>
-        <p>Total Price: <span id="totalPrice">$0</span></p>
+      <section id="reservationFormSection">
+        <h2>Car Rental Reservation Form</h2>
+        <form id="reservationForm">
+          <input type="text" id="name" placeholder="Your Name" required />
+          <input type="tel" id="phone" placeholder="Phone Number" required />
+          <input type="email" id="email" placeholder="Email Address" required />
+          <input type="text" id="license" placeholder="Driver's License Number" required />
+          <label>Rental Start Date: <input type="date" id="startDate" required /></label>
+          <label>Rental Duration (days): <input type="number" id="rentalDays" min="1" required /></label>
+          <p>Total Price: <span id="totalPrice">$0</span></p>
 
-        <button type="submit" id="submitBtn" disabled>Confirm Reservation</button>
-        <button type="button" id="cancelBtn">Cancel</button>
-      </form>
-      <div id="confirmationLink"></div>
+          <button type="submit" id="submitBtn" disabled>Confirm Reservation</button>
+          <button type="button" id="cancelBtn">Cancel</button>
+        </form>
+        <div id="confirmationLink"></div>
 
-      <div id="popup" class="modal" style="display: none;">
-        <div class="modal-content">
-          <p>Your reservation has been saved as <strong>pending</strong>.<br>
-            Please click the link below to confirm your booking:</p>
-          <a id="popupLink" href="#" target="_blank">Confirm Your Reservation</a>
-          <br><br>
-          <button onclick="document.getElementById('popup').style.display='none'">OK</button>
+        <div id="popup" class="modal" style="display: none;">
+          <div class="modal-content">
+            <p>Your reservation has been saved as <strong>pending</strong>.<br>
+              Please click the link below to confirm your booking:</p>
+            <a id="popupLink" href="#" target="_blank">Confirm Your Reservation</a>
+            <br><br>
+            <button onclick="document.getElementById('popup').style.display='none'">OK</button>
+          </div>
         </div>
-      </div>
-      
-
-    </section>
+      </section>
+    </div>
   </main>
 
   <script src="js/reservation.js"></script>
