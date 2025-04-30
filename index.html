@@ -49,8 +49,8 @@
       const grid = $('#carGrid');
       grid.empty();
       data.forEach(car => {
-        const carCard = $(
-          `<div class="carCard">
+        const carCard = $(`
+          <div class="carCard">
             <img src="${car.image}" alt="${car.carModel}" />
             <h3>${car.brand} ${car.carModel}</h3>
             <p>${car.description}</p>
@@ -59,9 +59,8 @@
               ${!car.available ? 'disabled title="Out of Stock"' : ''}>
               ${car.available ? 'Rent' : 'Out of Stock'}
             </button>
-
-          </div>`
-        );
+          </div>
+        `);
         grid.append(carCard);
       });
     }
@@ -72,12 +71,16 @@
       const brand = $('#brandFilter').val();
 
       const filtered = cars.filter(car => {
-        const keywordMatch = car.carType.toLowerCase().includes(keyword) ||
-                             car.brand.toLowerCase().includes(keyword) ||
-                             car.carModel.toLowerCase().includes(keyword) ||
-                             car.description.toLowerCase().includes(keyword);
+        const keywordMatch =
+          car.carType.toLowerCase().includes(keyword) ||
+          car.brand.toLowerCase().includes(keyword) ||
+          car.carModel.toLowerCase().includes(keyword) ||
+          (car.brand + ' ' + car.carModel).toLowerCase().includes(keyword) ||
+          car.description.toLowerCase().includes(keyword);
+
         const typeMatch = type === '' || car.carType === type;
         const brandMatch = brand === '' || car.brand === brand;
+
         return keywordMatch && typeMatch && brandMatch;
       });
 
@@ -85,51 +88,57 @@
     }
 
     function setupSearchSuggestions() {
-      $('#searchBox').on('input', function() {
+      $('#searchBox').on('input', function () {
         const inputVal = $(this).val().toLowerCase();
         const matches = [];
+
         cars.forEach(car => {
-          const words = [car.carType, car.brand, car.carModel, car.description];
-          words.forEach(word => {
-            if (word.toLowerCase().includes(inputVal) && !matches.includes(word)) {
-              matches.push(word);
-            }
-          });
+          if (car.carModel.toLowerCase().includes(inputVal) && !matches.includes(car.carModel)) {
+            matches.push(car.carModel);
+          }
         });
 
         const suggestionBox = $('#suggestions');
         suggestionBox.empty();
+
+        if (inputVal === '' || matches.length === 0) {
+          suggestionBox.hide();
+          return;
+        }
+
         matches.slice(0, 5).forEach(match => {
           suggestionBox.append(`<div class="suggestion">${match}</div>`);
         });
+
+        suggestionBox.show();
       });
 
-      $('#suggestions').on('click', '.suggestion', function() {
+      $('#suggestions').on('click', '.suggestion', function () {
         const val = $(this).text();
         $('#searchBox').val(val);
-        $('#suggestions').empty();
+        $('#suggestions').hide();
         filterAndSearch();
       });
     }
 
-    $(document).ready(function() {
+    $(document).ready(function () {
       $('#typeFilter, #brandFilter').on('change', filterAndSearch);
       $('#searchBox').on('input', filterAndSearch);
 
-      $.getJSON('data/cars.json', function(data) {
+      $.getJSON('data/cars.json', function (data) {
         cars = data.cars;
         renderCars(cars);
       });
 
       setupSearchSuggestions();
 
-      $('#carGrid').on('click', '.rentBtn', function() {
+      $('#carGrid').on('click', '.rentBtn', function () {
         const vin = $(this).data('vin');
         sessionStorage.setItem('selectedCarVin', vin);
         window.location.href = 'reservation.html';
       });
 
-      $('#reservationIcon').on('click', function() {
+      $('#reservationIcon').on('click', function () {
         window.location.href = 'reservation.html';
       });
     });
