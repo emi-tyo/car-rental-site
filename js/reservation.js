@@ -16,7 +16,7 @@ $(document).ready(function () {
         <p><strong>${selectedCar.brand} ${selectedCar.carModel}</strong> - $${selectedCar.pricePerDay}/day</p>
         <p>${selectedCar.description}</p>
       `);
-      updateFormStatus();  // ← Run after car data loads
+      updateFormStatus();  // car info が表示された後に実行
     } else {
       $("#carInfo").html("<p>Car not found.</p>");
       $("#reservationFormSection").hide();
@@ -24,8 +24,6 @@ $(document).ready(function () {
   });
 
   function updateFormStatus() {
-    console.log("updateFormStatus called");
-
     const name = $("#name").val().trim();
     const phone = $("#phone").val().trim();
     const email = $("#email").val().trim();
@@ -34,14 +32,15 @@ $(document).ready(function () {
     const rentalDays = parseInt($("#rentalDays").val());
 
     if (selectedCar && rentalDays > 0) {
-      const total = selectedCar.pricePerDay * rentalDays;
-      $("#totalPrice").text(`$${total}`);
+      const totalAmount = selectedCar.pricePerDay * rentalDays;
+      $("#totalPrice").text(`$${totalAmount}`);
+      $("#reservationForm").data("totalAmount", totalAmount);  // ← 保存
     } else {
       $("#totalPrice").text("$0");
+      $("#reservationForm").removeData("totalAmount");
     }
 
     const isValid = name && phone && email && license && startDate && rentalDays > 0;
-    console.log("isValid:", isValid);
     $("#submitBtn").prop("disabled", !isValid);
   }
 
@@ -55,18 +54,23 @@ $(document).ready(function () {
   $("#reservationForm").on("submit", function (e) {
     e.preventDefault();
 
-    const orderData = {
-      name: $("#name").val().trim(),
-      phone: $("#phone").val().trim(),
-      email: $("#email").val().trim(),
-      license: $("#license").val().trim(),
-      startDate: $("#startDate").val(),
-      rentalDays: parseInt($("#rentalDays").val()),
-      car: selectedCar,
-      totalPrice: selectedCar.pricePerDay * parseInt($("#rentalDays").val()),
-      status: "pending",
-      id: Date.now().toString()  // ← 一意な ID を文字列で生成
-    };
+const rentalDays = parseInt($("#rentalDays").val());
+const totalAmount = selectedCar.pricePerDay * rentalDays;
+
+const orderData = {
+  name: $("#name").val().trim(),
+  phone: $("#phone").val().trim(),
+  email: $("#email").val().trim(),
+  license: $("#license").val().trim(),
+  startDate: $("#startDate").val(),
+  rentalDays: rentalDays,
+  car: selectedCar,
+  total: totalAmount,
+  totalPrice: totalAmount,
+  status: "pending",
+  id: Date.now().toString()
+};
+
 
     console.log("Sending orderData:", orderData);
 
@@ -79,7 +83,7 @@ $(document).ready(function () {
         if (result.success && result.id) {
           sessionStorage.setItem("pendingOrder", JSON.stringify(orderData));
           $("#popupLink").attr("href", `confirmation.html?id=${orderData.id}`);
-          $("#popup").fadeIn(); // ← モーダルを表示
+          $("#popup").fadeIn();
         } else {
           alert("Server accepted but did not return ID.");
         }

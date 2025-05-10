@@ -47,7 +47,9 @@
             <p><strong>Total Price:</strong> $${order.total ?? 0}</p>
             <p><strong>Status:</strong> ${order.status}</p>
             <br>
-            <a href="index.html">← Back to Home</a> | <a href="history.html">View Reservation History →</a>
+            <a href="index.html" class="confirmation-button">Back to Home</a>
+            <a href="history.html" class="confirmation-button">View Reservation History</a>
+
           `);
         } else {
           $('#confirmationDetails').html('<h2 style="color:red">Reservation not found.</h2>');

@@ -4,6 +4,7 @@ body, html {
   padding: 0;
   font-family: Arial, sans-serif;
   background-color: #f8f9fa;
+  padding-top: 80px;
 }
 
 /* ヘッダー */
@@ -14,7 +15,10 @@ header {
   background-color: #fff;
   padding: 12px 24px;
   box-shadow: 0 1px 4px rgba(0,0,0,0.1);
-  position: relative; /* Add this for suggestion box positioning */
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 100;
 }
 
 .logo {
@@ -54,6 +58,12 @@ header {
 
 #reservationIcon:hover {
   background-color: #0056b3;
+}
+
+#reservationForm input {
+  max-width: 400px;
+  height: 36px;
+  font-size: 14px;
 }
 
 #suggestions {
@@ -155,27 +165,29 @@ header {
   cursor: not-allowed;
 }
 
-/* テーブル表示（履歴用） */
-table {
-  width: 100%;
-  border-collapse: collapse;
-  background: white;
-  box-shadow: 0 0 10px rgba(0,0,0,0.05);
+.carCard:hover {
+  transform: scale(1.05);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-table th, table td {
-  padding: 10px;
-  border: 1px solid #ccc;
-  text-align: left;
+
+/* テーブル表示（履歴用） */
+table {
+  background-color: #ffffff;
+  border-radius: 8px;
+  overflow: hidden;
 }
 
 table th {
-  background-color: #eaeaea;
+  background-color: #007bff;
+  color: white;
 }
 
 tbody tr:nth-child(even) {
-  background-color: #f9f9f9;
+  background-color: #f1f1f1;
 }
+
 
 td:last-child {
   text-align: right;
@@ -185,11 +197,7 @@ a {
   display: inline-block;
   margin-top: 20px;
   color: #007BFF;
-  text-decoration: none;
-}
-
-a:hover {
-  text-decoration: underline;
+  text-decoration: none !important;
 }
 
 .modal {
@@ -218,4 +226,88 @@ a:hover {
   max-width: 800px;
   margin: 0 auto;
   padding: 40px 20px;
+}
+
+#confirmationMessage {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 80vh;
+  text-align: center;
+}
+
+.confirmation-button {
+  display: inline-block;
+  padding: 10px 20px;
+  margin: 10px;
+  background-color: #007bff;
+  color: white;
+  text-decoration: none !important;
+  border-radius: 5px;
+  font-weight: bold;
+  transition: background-color 0.3s;
+}
+
+.confirmation-button:hover {
+  background-color: #0056b3;
+}
+
+
+.history-button {
+  display: inline-block;
+  background-color: #1E3A8A; /* お好みで変更可能 */
+  color: white;
+  text-decoration: none !important;
+  padding: 10px 20px;
+  border-radius: 6px;
+  font-weight: bold;
+  border: none;
+  transition: background-color 0.2s ease;
+}
+
+.history-button:hover {
+  background-color: #374FC7;
+}
+
+
+table th {
+  text-align: center;
+}
+
+
+/* 都会的なテーブルデザイン */
+#orderTable {
+  width: 90%;
+  margin: 40px auto;
+  border-collapse: separate;
+  border-spacing: 0;
+  font-size: 1.1rem;
+  background-color: #f9fbfc;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+/* ヘッダー */
+#orderTable thead {
+  background-color: #1e3a8a;
+  color: white;
+  text-align: center;
+}
+
+#orderTable th, #orderTable td {
+  padding: 16px 20px;
+  text-align: center;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+/* ボトムの行 */
+#orderTable tr:last-child td {
+  border-bottom: none;
+}
+
+/* 偶数行に背景色 */
+#orderTable tr:nth-child(even) {
+  background-color: #f1f5f9;
 }

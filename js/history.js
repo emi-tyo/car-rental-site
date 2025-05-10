@@ -7,7 +7,6 @@ $(document).ready(function () {
       return;
     }
 
-    // ✅ "confirmed" の予約だけ表示する
     const confirmedOrders = data.orders.filter(order => order.status === "confirmed");
 
     if (confirmedOrders.length === 0) {
@@ -16,12 +15,29 @@ $(document).ready(function () {
       `);
     } else {
       confirmedOrders.forEach(order => {
+        // 🛠️ totalPrice を柔軟に取得（number or numeric string）
+        let total;
+
+        if (!isNaN(order.total)) {
+          total = Number(order.total);
+        } else if (!isNaN(order.totalPrice)) {
+          total = Number(order.totalPrice);
+        } else if (
+          order.car &&
+          !isNaN(order.car.pricePerDay) &&
+          !isNaN(order.rentalDays)
+        ) {
+          total = order.car.pricePerDay * order.rentalDays;
+        } else {
+          total = 'N/A';
+        }
+
         $("#orderList").append(`
           <tr>
             <td>${order.name}</td>
             <td>${order.car.brand} ${order.car.carModel}</td>
             <td>${order.rentalDays}</td>
-            <td>$${order.total}</td>
+            <td>$${total}</td>
           </tr>
         `);
       });
