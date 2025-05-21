@@ -16,7 +16,7 @@ $(document).ready(function () {
         <p><strong>${selectedCar.brand} ${selectedCar.carModel}</strong> - $${selectedCar.pricePerDay}/day</p>
         <p>${selectedCar.description}</p>
       `);
-      updateFormStatus();  // car info が表示された後に実行
+      updateFormStatus();
     } else {
       $("#carInfo").html("<p>Car not found.</p>");
       $("#reservationFormSection").hide();
@@ -34,7 +34,7 @@ $(document).ready(function () {
     if (selectedCar && rentalDays > 0) {
       const totalAmount = selectedCar.pricePerDay * rentalDays;
       $("#totalPrice").text(`$${totalAmount}`);
-      $("#reservationForm").data("totalAmount", totalAmount);  // ← 保存
+      $("#reservationForm").data("totalAmount", totalAmount);
     } else {
       $("#totalPrice").text("$0");
       $("#reservationForm").removeData("totalAmount");

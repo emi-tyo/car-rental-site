@@ -9,12 +9,11 @@ const PORT = 3000;
 app.use(cors());
 app.use(express.json());
 
-// 📁 パスの共通設定
+
 const ordersPath = path.join(__dirname, 'data', 'orders.json');
 const carsPath = path.join(__dirname, 'data', 'cars.json');
 
 
-// 🔸 予約を保存（初期ステータスは "pending"）
 app.post('/save-order', (req, res) => {
   const newOrder = req.body;
 
@@ -29,13 +28,13 @@ app.post('/save-order', (req, res) => {
   res.json({ success: true, id: newOrder.id });
 });
 
-// 🔸 予約一覧を取得（history.html用）
+
 app.get('/orders', (req, res) => {
   const orders = JSON.parse(fs.readFileSync(ordersPath, 'utf-8'));
   res.json(orders);
 });
 
-// 🔸 予約確認リンクをクリックしたとき（status: pending → confirmed）
+
 app.post('/confirm-order', (req, res) => {
   const { id } = req.body;
 
@@ -47,7 +46,6 @@ app.post('/confirm-order', (req, res) => {
   if (order) {
     order.status = 'confirmed';
 
-    // 在庫更新：VINが一致する車を在庫切れに
     const carToUpdate = carsData.cars.find(car => car.vin === order.car.vin);
     if (carToUpdate) {
       carToUpdate.available = false;
@@ -62,5 +60,5 @@ app.post('/confirm-order', (req, res) => {
 });
 
 app.listen(PORT, () => {
-  console.log(`🚗 Server is running at http://localhost:${PORT}`);
+  console.log(`Server is running at http://localhost:${PORT}`);
 });

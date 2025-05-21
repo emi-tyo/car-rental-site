@@ -21,7 +21,7 @@
       "yearOfManufacture": 2001,
       "mileage": "45,000 km",
       "fuelType": "Gasoline",
-      "available": true,
+      "available": false,
       "pricePerDay": 70,
       "description": "Spacious and versatile, great for family trips and outdoor adventures.",
       "vin": "2HGFC2F60KH123456"
@@ -34,7 +34,7 @@
       "yearOfManufacture": 2010,
       "mileage": "15,000 km",
       "fuelType": "Gasoline",
-      "available": false,
+      "available": true,
       "pricePerDay": 120,
       "description": "A powerful and stylish coupe offering an exhilarating driving experience.",
       "vin": "1FA6P8TH6J5134567"
@@ -112,7 +112,7 @@
       "yearOfManufacture": 2023,
       "mileage": "8,000 km",
       "fuelType": "Electric",
-      "available": false,
+      "available": true,
       "pricePerDay": 95,
       "description": "Futuristic electric sedan with advanced autopilot features.",
       "vin": "5YJ3E1EA5LF123456"
@@ -151,7 +151,7 @@
       "yearOfManufacture": 2021,
       "mileage": "14,000 km",
       "fuelType": "Gasoline",
-      "available": true,
+      "available": false,
       "pricePerDay": 110,
       "description": "Elegant coupe with sporty performance and technology.",
       "vin": "WBA4Z3C58JEC12345"

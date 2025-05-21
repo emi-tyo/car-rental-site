@@ -15,7 +15,6 @@
 
   <main>
     <section id="confirmationDetails" style="margin-left: 40px;">
-      <!-- Reservation details will be inserted here -->
       <p>Loading confirmation...</p>
     </section>
   </main>
@@ -38,7 +37,7 @@
       .then(res => res.json())
       .then(data => {
         if (data.success && data.order) {
-          const order = data.order; // ✅ Corrected name
+          const order = data.order;
           $('#confirmationDetails').html(`
             <h2 style="color: green;">Your reservation has been confirmed!</h2>
             <p><strong>Name:</strong> ${order.name}</p>

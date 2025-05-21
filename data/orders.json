@@ -24,6 +24,106 @@
       "totalPrice": 285,
       "status": "confirmed",
       "id": "1746860010653"
+    },
+    {
+      "name": "Go F",
+      "phone": "0481851149",
+      "email": "hhhh@docomo.ne.jp",
+      "license": "123456",
+      "startDate": "2025-05-23",
+      "rentalDays": 1,
+      "car": {
+        "carType": "Sedan",
+        "brand": "Toyota",
+        "carModel": "Camry",
+        "image": "images/SedanToyotaCamry.PNG",
+        "yearOfManufacture": 2020,
+        "mileage": "25,000 km",
+        "fuelType": "Gasoline",
+        "available": true,
+        "pricePerDay": 55,
+        "description": "Spacious and efficient sedan ideal for business trips.",
+        "vin": "JTNBE46K273123456"
+      },
+      "total": 55,
+      "totalPrice": 55,
+      "status": "confirmed",
+      "id": "1747810795041"
+    },
+    {
+      "name": "Emi Sekikawa",
+      "phone": "0481851149",
+      "email": "emisekikawa@gmail.com",
+      "license": "123456",
+      "startDate": "2025-05-27",
+      "rentalDays": 2,
+      "car": {
+        "carType": "Van",
+        "brand": "Honda",
+        "carModel": "Odyssey",
+        "image": "images/VanHondaOdyssey.PNG",
+        "yearOfManufacture": 2022,
+        "mileage": "10,000 km",
+        "fuelType": "Gasoline",
+        "available": true,
+        "pricePerDay": 85,
+        "description": "Comfortable minivan with room for the whole family.",
+        "vin": "5FNRL6H77MB123456"
+      },
+      "total": 170,
+      "totalPrice": 170,
+      "status": "confirmed",
+      "id": "1747812449701"
+    },
+    {
+      "name": "Emi Sekikawa",
+      "phone": "0481851149",
+      "email": "emisekikawa@gmail.com",
+      "license": "123456",
+      "startDate": "2025-05-23",
+      "rentalDays": 3,
+      "car": {
+        "carType": "SUV",
+        "brand": "Honda",
+        "carModel": "CR-V",
+        "image": "images/cr-v.png",
+        "yearOfManufacture": 2001,
+        "mileage": "45,000 km",
+        "fuelType": "Gasoline",
+        "available": true,
+        "pricePerDay": 70,
+        "description": "Spacious and versatile, great for family trips and outdoor adventures.",
+        "vin": "2HGFC2F60KH123456"
+      },
+      "total": 210,
+      "totalPrice": 210,
+      "status": "confirmed",
+      "id": "1747813607899"
+    },
+    {
+      "name": "Toru",
+      "phone": "45454545",
+      "email": "12sdgo@gmail.com",
+      "license": "345678995",
+      "startDate": "2025-05-23",
+      "rentalDays": 2,
+      "car": {
+        "carType": "Coupe",
+        "brand": "BMW",
+        "carModel": "4 Series",
+        "image": "images/CoupeBMW4Series.png",
+        "yearOfManufacture": 2021,
+        "mileage": "14,000 km",
+        "fuelType": "Gasoline",
+        "available": true,
+        "pricePerDay": 110,
+        "description": "Elegant coupe with sporty performance and technology.",
+        "vin": "WBA4Z3C58JEC12345"
+      },
+      "total": 220,
+      "totalPrice": 220,
+      "status": "confirmed",
+      "id": "1747814716765"
     }
   ]
 }

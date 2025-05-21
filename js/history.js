@@ -1,9 +1,9 @@
 $(document).ready(function () {
-  console.log("📦 history.js loaded");
+  console.log("history.js loaded");
 
   $.get("http://localhost:3000/orders", function (data) {
     if (!data || !data.orders) {
-      console.error("❌ No order data found.");
+      console.error("No order data found.");
       return;
     }
 
@@ -15,7 +15,6 @@ $(document).ready(function () {
       `);
     } else {
       confirmedOrders.forEach(order => {
-        // 🛠️ totalPrice を柔軟に取得（number or numeric string）
         let total;
 
         if (!isNaN(order.total)) {
@@ -43,7 +42,7 @@ $(document).ready(function () {
       });
     }
   }).fail(function (err) {
-    console.error("❌ Failed to load orders:", err);
+    console.error("Failed to load orders:", err);
     $("#orderList").append(`
       <tr><td colspan="4">Error loading reservation history.</td></tr>
     `);
