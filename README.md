@@ -84,7 +84,10 @@ http://localhost/car-rental-site/index.html
 
 ## Live Demo
 
-![Demo](assets/demo.mp4)
+## Live Demo
+
+[▶ Watch Demo](assets/demo.mp4)
+[▶ Watch Demo](https://github.com/emi-tyo/car-rental-site/blob/main/assets/demo.mp4)
 
 
 ## Repository
