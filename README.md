@@ -82,12 +82,10 @@ http://localhost/car-rental-site/index.html
 > Note: Place the `car-rental-site` folder inside your XAMPP `htdocs` directory. Run Node server for API support.
 
 
-## Live Demo
+## Demo Video
 
-## Live Demo
-
-[▶ Watch Demo](assets/demo.mp4)
-[▶ Watch Demo](https://github.com/emi-tyo/car-rental-site/blob/main/assets/demo.mp4)
+You can view the demo video here: 
+[▶ Watch Demo](https://github.com/emi-tyo/car-rental-site/raw/main/assets/demo.mp4)
 
 
 ## Repository
